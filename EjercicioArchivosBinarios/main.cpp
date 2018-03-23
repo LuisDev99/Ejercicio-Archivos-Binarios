@@ -56,6 +56,47 @@ int main() {
 
 void deleteHerramienta() {
 
+	Herramienta h;
+
+	ofstream writer("ferreteria.dat", ios::binary | ios::app);
+	int code, posicion = 0;
+
+	cout << "Ingrese el codigo de la herramienta: ";
+	cin >> code;
+
+	h.codigo = code;
+
+	posicion = getPosicion(code);
+
+	if (posicion == -1) {
+		cout << "No se encontro ese codigo en ninguna herramienta!" << endl;
+		return;
+	}
+
+
+	writer.seekp(0, ios::end);
+
+	int bytesTotales = writer.tellp();
+
+	int tam = sizeof Herramienta;
+
+	int helper = tam * posicion;
+
+	int	pointer = (helper != 0) ? bytesTotales / helper : 0;
+
+	pointer *= tam;
+
+	writer.seekp(pointer, ios::beg);
+
+	h.cantidad = 0;
+	h.precio = 0;
+	h.codigo = -1;
+
+	writer.write(reinterpret_cast<char *>(&h), sizeof Herramienta);
+
+	cout << "Herramienta eliminada!" << endl;
+
+	writer.close();
 
 
 }
