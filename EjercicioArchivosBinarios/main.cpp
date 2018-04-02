@@ -10,7 +10,7 @@ struct Herramienta {
 	int cantidad;
 	float precio;
 
-};
+};//
 
 
 void deleteHerramienta();
